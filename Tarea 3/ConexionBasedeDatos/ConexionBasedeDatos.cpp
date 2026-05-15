@@ -4,7 +4,7 @@
 int main() {
     try {
         pqxx::connection C(
-            "dbname=testdb user=postgres password=12345 host=localhost port=5432"
+            "dbname=Universidad user=postgres password=12345 host=localhost port=5432"
         );
 
         if (C.is_open()) {
@@ -12,11 +12,12 @@ int main() {
         }
 
         pqxx::work W(C);
-        pqxx::result R = W.exec("SELECT * FROM usuarios");
+        pqxx::result R = W.exec("SELECT * FROM alumnos");
 
         for (auto row : R) {
             std::cout << row["id"].as<int>() << " - "
-                << row["nombre"].as<std::string>() << std::endl;
+                << row["nombre"].as<std::string>() << "\t" << " - "
+                << "\t" << row["apellido"].as<std::string>() << std::endl;
         }
 
         W.commit();
